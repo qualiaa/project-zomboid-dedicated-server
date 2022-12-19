@@ -1,0 +1,11 @@
+--- ".steam/steamapps/common/Project Zomboid Dedicated Server/start-server.sh"	2022-12-19 01:28:55.478268222 +0000
++++ scripts/start_server.sh	2022-12-01 19:00:25.791929093 +0000
+@@ -7,7 +7,7 @@
+ #
+ ############
+ 
+-INSTDIR="`dirname $0`" ; cd "${INSTDIR}" ; INSTDIR="`pwd`"
++INSTDIR="$(dirname "$0")" ; cd "${INSTDIR}" ; INSTDIR="$(pwd)"
+ 
+ if "${INSTDIR}/jre64/bin/java" -version > /dev/null 2>&1; then
+ 	echo "64-bit java detected"

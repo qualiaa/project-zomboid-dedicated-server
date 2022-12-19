@@ -1,0 +1,71 @@
+#!/bin/bash
+
+set -meuo pipefail
+
+: ${SERVER_NAME:=my-server}
+: ${GAME_VERSION:=public}
+: ${LISTEN_IP:=$(hostname -I)}
+: ${ADMIN_PASSWORD:=$(</run/secrets/admin-password)}
+
+scripts_dir="$HOME/scripts"
+server_data_dir="$HOME/.steam/steamapps/common/Project Zomboid Dedicated Server"
+
+server_cmd_path="$server_data_dir/start-server.sh"
+steam_install_script="$scripts_dir/install.scmd"
+
+server_is_installed() {
+    [ -f "$server_cmd_path" ]
+}
+
+steamcmd_install_or_update_server() {
+    script=$(mktemp)
+    cat >$script <<EOF
+@NoPromptForPassword 1
+login anonymous
+app_update 380870 -beta $GAME_VERSION validate
+quit
+EOF
+    steamcmd +runscript $script
+    rm $script
+}
+
+install_or_update_server() {
+    steamcmd_install_or_update_server
+    # Fix bugs in provided start_server.sh
+    patch -u "$server_cmd_path" -i "$scripts_dir/start-server.patch"
+    # Fix broken LD_PRELOAD configuration in start_server.sh
+    ln -frs "$server_data_dir/jre64/lib/server/libjsig.so" "$server_data_dir/libjsig.so"
+}
+
+initial_run() {
+    run_server&
+    sleep 1
+    echo quit >> server-commands
+    fg
+}
+
+run_server() {
+    [ -e server-commands ] && rm server-commands
+    mkfifo server-commands
+    "$server_cmd_path" \
+        -servername "$SERVER_NAME" \
+        -ip "$LISTEN_IP" \
+        -adminpassword "$ADMIN_PASSWORD" <server-commands &
+    exec 3>server-commands # Ensure someting is always writing to the server-commands file
+    fg
+EOF
+}
+
+if server_is_installed; then
+    echo "Checking for updates..."
+    install_or_update_server
+    echo "Starting server on local IP $LISTEN_IP"
+    run_server
+else
+    echo "Server is not installed."
+    echo "Installing server..."
+    install_or_update_server
+    echo "Server has now installed. Running server to create config files..."
+    initial_run
+    echo "Initial server run complete. Check config/Server folder for '$SERVER_NAME' configuration files."
+fi

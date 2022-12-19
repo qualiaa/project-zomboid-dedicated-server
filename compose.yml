@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  fix-perms:
+    image: ubuntu
+    command: chown -R 1000:1000 /Zomboid
+    volumes:
+      - ./config/Zomboid:/Zomboid
+  server:
+    build: dockerfile
+    image: pz-dedicated-server
+    restart: on-failure
+    environment:
+      SERVER_NAME: jamserve
+    ports:
+      - "16261:16261/udp"
+      - "16262:16262/udp"
+      - "27015:27015"
+    volumes:
+      - ./scripts:/home/zomboid/scripts
+      - ./config/Zomboid:/home/zomboid/Zomboid
+
+      - "game-data:/home/zomboid/.steam/steamapps/common/Project Zomboid Dedicated Server"
+
+      - "./config/jvm.json:/home/zomboid/.steam/steamapps/common/Project Zomboid Dedicated Server/ProjectZomboid64.json"
+    depends_on:
+      fix-perms:
+        condition: service_completed_successfully
+    secrets:
+      - admin-password
+volumes:
+  game-data:
+secrets:
+  admin-password:
+    file: secrets/admin-password
