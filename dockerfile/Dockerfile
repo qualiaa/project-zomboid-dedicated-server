@@ -1,5 +1,9 @@
 FROM steamcmd/steamcmd
 
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install patch && \
+    rm -rf /var/lib/apt/lists/*
+
 # Create unprivileged user to run server
 RUN useradd -m zomboid
 ENV USER_HOME /home/zomboid
