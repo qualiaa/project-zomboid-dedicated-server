@@ -9,9 +9,7 @@ set -meuo pipefail
 
 scripts_dir="$HOME/scripts"
 server_data_dir="$HOME/.steam/steamapps/common/Project Zomboid Dedicated Server"
-
 server_cmd_path="$server_data_dir/start-server.sh"
-steam_install_script="$scripts_dir/install.scmd"
 
 server_is_installed() {
     [ -f "$server_cmd_path" ]
