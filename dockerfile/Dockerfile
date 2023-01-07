@@ -4,8 +4,10 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get install patch && \
     rm -rf /var/lib/apt/lists/*
 
+ARG HOST_UID
+
 # Create unprivileged user to run server
-RUN useradd -m zomboid
+RUN useradd --uid ${HOST_UID?-Must provide HOST_UID} --create-home zomboid
 ENV USER_HOME /home/zomboid
 ENV STEAM_HOME "$USER_HOME/.steam"
 ENV INSTALL_DIR "$STEAM_HOME/steamapps/common/Project Zomboid Dedicated Server"
