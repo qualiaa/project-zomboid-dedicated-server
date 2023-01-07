@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p config/Zomboid/Server
+mkdir -p config/Zomboid/mods
+touch config/jvm-config.json
