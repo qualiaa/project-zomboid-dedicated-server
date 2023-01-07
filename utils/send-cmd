@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker-compose exec server bash -c "echo '$@' >> user-input"
