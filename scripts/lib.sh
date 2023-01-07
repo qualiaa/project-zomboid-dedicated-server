@@ -7,7 +7,7 @@ set -m
 
 data_dir="$HOME/Zomboid"
 scripts_dir="$HOME/scripts"
-server_data_dir="$HOME/.steam/steamapps/common/Project Zomboid Dedicated Server"
+server_data_dir="$HOME/Steam/steamapps/common/Project Zomboid Dedicated Server"
 server_cmd_path="$server_data_dir/start-server.sh"
 default_config="$scripts_dir/default.ini"
 

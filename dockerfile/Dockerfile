@@ -9,19 +9,19 @@ ARG HOST_UID
 # Create unprivileged user to run server
 RUN useradd --uid ${HOST_UID?-Must provide HOST_UID} --create-home zomboid
 ENV USER_HOME /home/zomboid
-ENV STEAM_HOME "$USER_HOME/.steam"
+ENV STEAM_HOME "$USER_HOME/Steam"
 ENV INSTALL_DIR "$STEAM_HOME/steamapps/common/Project Zomboid Dedicated Server"
 
 # We must move steam install to unprivileged user, and create all volume
 # mount-points with correct ownership before they are mounted for the first time
-RUN mv /root/.steam "$STEAM_HOME" && \
+RUN mv /root/Steam "$STEAM_HOME" && \
+    mv /root/.steam "$USER_HOME"/.steam && \
     ln -sf "$STEAM_HOME" "$STEAM_HOME"/root && \
     ln -sf "$STEAM_HOME" "$STEAM_HOME"/steam && \
-    mv "$STEAM_HOME"/{SteamApps,steamapps} && \
-    mkdir "$INSTALL_DIR" && \
+    mkdir -p "$INSTALL_DIR" && \
     touch "$INSTALL_DIR/ProjectZomboid64.json" && \
     mkdir -p "$USER_HOME/Zomboid/Server" && \
-    chown -R zomboid:zomboid "$USER_HOME/Zomboid" "$STEAM_HOME"
+    chown -R zomboid:zomboid "$USER_HOME"
 
 USER zomboid
 # These variables are not set correctly automatically for some reason

@@ -20,9 +20,9 @@ services:
       - ./scripts:/home/zomboid/scripts
       - ./config/Zomboid:/home/zomboid/Zomboid
 
-      - "game-data:/home/zomboid/.steam/steamapps/common/Project Zomboid Dedicated Server"
+      - "game-data:/home/zomboid/Steam/steamapps/common/Project Zomboid Dedicated Server"
 
-      - "./config/jvm-config.json:/home/zomboid/.steam/steamapps/common/Project Zomboid Dedicated Server/ProjectZomboid64.json"
+      - "./config/jvm-config.json:/home/zomboid/Steam/steamapps/common/Project Zomboid Dedicated Server/ProjectZomboid64.json"
     environment:
       - SERVER_NAME
     depends_on:
