@@ -9,20 +9,19 @@ Clone this repo somewhere in your web server:
 
     git clone https://github.com/qualiaa/project-zomboid-dedicated-server
 
-Then enter the repository root and run an init script
+Now enter the repository root:
 
     cd project-zomboid-dedicated-server
-    utils/init
 
-You need to set the `HOST_UID` in the file `.env` to your UID (find this with the
-command `id -u`). You may also wish to change the listening ports, also in
-this file.
+You may wish to change the listening ports in the (hidden) `.env` file.
+
+> **Note**: that you do *not* need to change the ports in the `compose.yml` file.
 
 Set the server admin password by modifying the file `secrets/admin-password`.
 
-Now install the server software with:
+Now install the server software with the command:
 
-    docker-compose run --rm --build server scripts/update
+    utils/install
 
 > **NOTE**: After installation, you probably want to tweak is the `-Xmx8g`
 > maximum allocated RAM in `config/jvm-config.yml`; replace `8g` with some other
@@ -62,7 +61,7 @@ When an update is released, you should bring the server down with:
 
 then issue the command:
 
-    docker-compose run --rm server scripts/update
+    utils/update
 
 then bring the server up again with:
 
