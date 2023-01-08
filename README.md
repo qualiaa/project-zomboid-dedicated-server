@@ -15,7 +15,7 @@ Now enter the repository root:
 
 You may wish to change the listening ports in the (hidden) `.env` file.
 
-> **Note**: that you do *not* need to change the ports in the `compose.yml` file.
+> **Note**: you do *not* need to change the ports in the `compose.yml` file.
 
 Set the server admin password by modifying the file `secrets/admin-password`.
 
@@ -23,7 +23,9 @@ Now install the server software with the command:
 
     utils/install
 
-> **NOTE**: After installation, you probably want to tweak is the `-Xmx8g` maximum allocated RAM in `config/jvm-config.yml`; replace `8g` with some other value in `m`egabytes or `g`igabytes.
+> **NOTE**: After installation, you probably want to tweak the `-Xmx8g` maximum
+> allocated RAM in `config/jvm-config.yml`; replace `8g` with some other value
+> in `m`egabytes or `g`igabytes.
 
 
 ## Starting a new world
@@ -31,7 +33,9 @@ Now install the server software with the command:
 To start a new world, change the `SERVER_NAME` value in the (hidden) file
 `.env`.
 
-> **NOTE**: If you want to set up mods for the server, modify the template config file at `scripts/default.ini` appropriately. Changes you make here will be copied into the world-specific config files generated later.
+> **NOTE**: If you want to set up mods for the server, modify the template
+> config file at `scripts/default.ini` appropriately. Changes you make here will
+> be copied into the world-specific config files generated later.
 
 Now start the server with:
 
@@ -72,10 +76,10 @@ differently for each server. Then launch each one with
     docker-compose --env-file "server-1.env" up --detach
     docker-compose --env-file "server-2.env" up --detach
 
-Note that all servers will share the same config folder and game data. If you
-want to separate them completely, for example to run servers at different game
-versions, you need to copy the whole compose project folder and manage each one
-independently.
+> **NOTE**: All servers will share the same config folder and game data. If you
+> want to separate them completely, for example to run servers at different game
+> versions, you need to copy the whole compose project folder and manage each
+> one independently.
 
 ## RCON
 
