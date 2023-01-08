@@ -23,9 +23,7 @@ Now install the server software with the command:
 
     utils/install
 
-> **NOTE**: After installation, you probably want to tweak is the `-Xmx8g`
-> maximum allocated RAM in `config/jvm-config.yml`; replace `8g` with some other
-> value in `m`egabytes or `g`igabytes.
+> **NOTE**: After installation, you probably want to tweak is the `-Xmx8g` maximum allocated RAM in `config/jvm-config.yml`; replace `8g` with some other value in `m`egabytes or `g`igabytes.
 
 
 ## Starting a new world
@@ -33,9 +31,7 @@ Now install the server software with the command:
 To start a new world, change the `SERVER_NAME` value in the (hidden) file
 `.env`.
 
-> **NOTE**: If you want to set up mods for the server, modify the template
-> config file at `scripts/default.ini` appropriately. Changes you make here will
-> be copied into the world-specific config files generated later.
+> **NOTE**: If you want to set up mods for the server, modify the template config file at `scripts/default.ini` appropriately. Changes you make here will be copied into the world-specific config files generated later.
 
 Now start the server with:
 
